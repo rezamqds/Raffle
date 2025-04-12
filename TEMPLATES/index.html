@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ورود اطلاعات - KMC</title>
+
+    <link rel="stylesheet" href="/static/index.css">
+
+    <script src="/static/JS/jquery-3.6.0.min.js"></script>
+
+    <link rel="stylesheet" href="/static/SWA/sweetalert.min.css">
+
+    <script src="/static/SWA/sweetalert.min.js"></script>
+
+    
+
+</head>
+
+<body>
+
+    <h1>ورود اطلاعات - KMC</h1>
+
+    <form id="dataForm">
+
+        <input type="text" name="value" placeholder="کد ملی" required>
+
+        <button type="submit">تایید</button>
+
+    </form>
+
+    <h2>خروجی اکسل</h2>
+
+    <a href="/export">دانلود فایل اکسل</a>
+
+
+
+    <script>
+
+        $(document).ready(function() {
+
+            $('#dataForm').on('submit', function(event) {
+
+                event.preventDefault();
+
+
+
+                const formData = {
+
+                    value: $('input[name="value"]').val()
+
+                };
+
+
+
+                $.ajax({
+
+                    url: '/add',
+
+                    type: 'POST',
+
+                    contentType: 'application/json',
+
+                    data: JSON.stringify(formData),
+
+                    success: function(response) {
+
+                        
+
+                        swal("موفقیت", response.message, "success");
+
+                    },
+
+                    error: function(xhr) {
+
+                        const response = JSON.parse(xhr.responseText);
+
+                        swal("خطا", response.message, "error");
+
+                    }
+
+                });
+
+            });
+
+        });
+
+    </script>
+
+</body>
+
+  </html>
